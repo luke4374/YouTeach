@@ -9,11 +9,12 @@ import UserInfo from "./account/userinfo/index";
 import Video from "./VideoPage";
 import nav from "./nav";
 import Demo from "./Demo";
-import Demo1 from "./Demo1";
+import LiveCourse from "./LiveCourse";
 import Test from "./TestPage";
 import TeacherInfo from "./Teacher/Info";
 import Chat from "./chat/chat";
 import AbilityInfo from "./Ability/AbilityInfo";
+import Collection from "./Collection";
 const HomeStack = createStackNavigator();
 export default class HomeScreen extends Component {
  
@@ -22,7 +23,7 @@ export default class HomeScreen extends Component {
         return (
             <NavigationContainer>
                 {/* initialRouteName="UserInfo" */}
-            <HomeStack.Navigator headerMode="none" >
+            <HomeStack.Navigator headerMode="none"  >
                 <HomeStack.Screen  name="Nav" component={nav} />
                 <HomeStack.Screen name="Login" component={Login} />
                 <HomeStack.Screen name="Chat" component={Chat} />
@@ -33,7 +34,8 @@ export default class HomeScreen extends Component {
                 <HomeStack.Screen name="Video" component={Video}/>
                 <HomeStack.Screen name="Test" component={Test}/>
                 <HomeStack.Screen  name="Demo" component={Demo} />
-                <HomeStack.Screen  name="Demo1" component={Demo1} />
+                <HomeStack.Screen  name="LiveCourse" component={LiveCourse} />
+                <HomeStack.Screen  name="Collection" component={Collection} />
             </HomeStack.Navigator>
             </NavigationContainer>
         )

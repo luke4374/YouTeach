@@ -98,7 +98,7 @@ export default class MinePage extends Component {
     renderloginIcon=()=>{
         let type = "";
         if(this.props.UserStore.user.u_usertype == 0){
-            type = "学生";
+            type = "同学";
         }else if(this.props.UserStore.user.u_usertype == 1){
             type = "老师";
         }else{
@@ -182,9 +182,8 @@ export default class MinePage extends Component {
                 <View style={styles.centerBlock}>
                     <TouchableOpacity 
                     onPress={()=>{
-                        console.log(this.state.LoginStat)
-                        }
-                    }
+                        {this.props.RootStore.loginstat?this.props.navigation.navigate("Collection"):Toast.sad("您未登陆哦",1000,"center")}
+                    }}
                  >
                         <View style={{marginLeft:10}}>
                             <SvgUri svgXmlData={Collect} width="35" height="35"/>
@@ -195,10 +194,10 @@ export default class MinePage extends Component {
                     <TouchableOpacity
                         onPress={()=>console.log(this.props.navigation.params)}
                     >
-                        <View style={{marginLeft:10}}>
+                        <View style={{marginLeft:10}}> 
                             <SvgUri svgXmlData={Plane} width="35" height="35"/>
                         </View>
-                        <Text style={{marginTop:5,fontSize:14,color:"#888"}}>我的消息</Text>
+                        <Text style={{marginTop:5,fontSize:14,color:"#888"}}>我的报名</Text>
                     </TouchableOpacity>
                 </View>
                     {/* 选项栏 开始 */}

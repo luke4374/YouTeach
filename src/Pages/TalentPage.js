@@ -30,6 +30,7 @@ export default class TalentPage extends Component {
         abilityInfo:[],
         testTitle:[],
         // testNum:0,
+        setVisible:false,
         testInfo:[],    
         refreshing:false,
         page:1,

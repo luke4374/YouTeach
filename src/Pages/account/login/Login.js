@@ -75,7 +75,6 @@ export default class index extends Component {
     }
     passwordOnSubmit=async()=>{
         const {password} = this.state;
-        
         const res = await request.post(ACCOUNT_LOGIN,{
             u_username:this.state.username,
             u_password:password
@@ -109,14 +108,14 @@ export default class index extends Component {
             this.props.UserStore.setUser(res.data);
             //极光登录
             // await JMessage.login(res.data.u_id,res.data.u_phone)
-            this.loginSuccess();
+            // this.loginSuccess();
         }else{
             Alert.alert("登陆失败","用户名或密码错误");
         }
 
     }
     refresh=(state)=>{
-        this.setState({ loginStat:state  });
+        this.setState({ loginStat:state });
     }
     //登陆成功跳转主页面
     loginSuccess=()=>{
@@ -169,7 +168,7 @@ export default class index extends Component {
                 </View>
                 <View>
                     <View style={styles.LoginButton}>
-                        <LoginButton onPress={this.loginSubmit}>登录</LoginButton>
+                        <LoginButton onPress={this.passwordOnSubmit}>登录</LoginButton>
                     </View>
                 </View>
                 {/* <TouchableOpacity

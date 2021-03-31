@@ -17,15 +17,16 @@ import {
 } from 'react-native-confirmation-code-field';
 import TopNavHome from "../components/TopNav";
 import { Overlay } from "teaset";
-
+import AntDesign from "react-native-vector-icons/AntDesign" ;
 import request from "../utils/request";
-import { SUBJECT_CHINESE,SUBJECT_ENGLISH,SUBJECT_MATH,ABILITY_INFO } from "../utils/pathMap";
+import { DELETE_COLLECTION, FIND_COLL_BYUID } from "../utils/pathMap";
 //视频播放组件
 import Slider from 'react-native-slider';
 import Video from 'react-native-video';
 //Jmessage
 import JMessage from "../utils/JMessage";
 import { inject, observer } from "mobx-react";
+import Toast from '../utils/Toast';
  
 let screenWidth  = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
@@ -39,43 +40,59 @@ export default class Demo extends Component {
       // status :this.props.RootStore.status,
       statement:false,
       visible:false,
-      setVisible:false
+      setVisible:false,
+      collection:[]
     }
-    showOverlay=()=> {
-      let overlayView = (
-        <Overlay.View
-          style={styles.overlayContainer}
-          modal={true}
-          overlayOpacity={0}
-          ref={v => this.overlayView = v}
-          >
-          <View style={styles.overlay}>
-
-          </View>
-        </Overlay.View>
-      );
-        Overlay.show(overlayView);
-
+    componentDidMount() {
+      this.getCollection();
     }
+    getCollection=async()=>{
+      const res = await request.get(FIND_COLL_BYUID+"6013");
+      console.log(res);
+      this.setState({ collection:res  });
+    }
+
+    deleteCollection=async(fid)=>{
+      const res = await request.delete(DELETE_COLLECTION+fid);
+      if(res.status == 1){
+        Toast.message("取消收藏",1000,"bottom");
+        this.getCollection();
+      }
+      console.log(res);
+    }
+
   render(){
-    const {statement,visible} = this.state
+    const {statement,collection} = this.state
     return(
       <View style={styles.container}>
-                <TopNavHome title={"答题结果"} page={"Nav"} />
-                {/* 背景图片 */}
-                <ImageBackground 
-                    style={{height:"60%",width:"100%"}}
-                    imageStyle={{height:"100%", borderBottomLeftRadius:15,borderBottomRightRadius:15}}
-                    source={require("../pic/beach.png")}
-                >
-                  </ImageBackground>
-                <View>
-                  <TouchableOpacity onPress={()=>this.setState({ setVisible:!visible },console.log(this.state.setVisible))}>
-                      <Text>Overlay</Text>
-                  </TouchableOpacity>
-                  {this.state.setVisible?this.showOverlay():null}
+        <TopNavHome title={"我的收藏"}/>
+          <View>
+            {collection.map((v,i)=>
+            <View style={{justifyContent:"center"}}>
+              <TouchableOpacity style={{flexDirection:"row",height:95,padding:6}} 
+                onPress={()=>this.props.navigation.navigate('Video',{
+                  c_id:v.c_id,
+                  c_subject:v.c_subject
+                })}>
+                <View style={{width:"38%"}}>
+                  <Image 
+                      source={{uri:v.c_pic}} 
+                      style={{width:120,height:80,borderRadius:15}}
+                  />
                 </View>
-                  
+                <View style={{width:"63%",position:"relative",margin:6}}>
+                  <Text style={{marginBottom:10}}>{v.c_name}</Text>
+                  <TouchableOpacity style={{position:"absolute",right:20,top:50}}
+                    onPress={this.deleteCollection.bind(this,v.f_id)}
+                  >
+                    <AntDesign name="delete" size={25} color="#C0C0C0"/>
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
+              <View style={{width:"100%",height:1,backgroundColor:"lightgray"}}></View>
+            </View>
+            )}
+          </View>
       </View>
     )
   }

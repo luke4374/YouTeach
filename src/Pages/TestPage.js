@@ -25,9 +25,7 @@ export default class TestPage extends Component {
         Score:0,
         totalScore:0,
         myScore:0,
-        visible:false,
         setVisible:false,
-        showResult:false,
         currentIndex:0,
         chooseNum:0
     }
@@ -90,33 +88,37 @@ export default class TestPage extends Component {
     }
     
     overlayGoback=()=>{
-        this.overlayView && this.overlayView.close()&&this.setState({ setVisible:false })
+        this.setState({ setVisible:false  });
         console.log(this.state.setVisible)
-        this.props.navigation.goBack()
+        this.props.navigation.navigate("Nav")
     }
 
     showOverlay=()=> {
         const {totalScore,myScore,cards,answers,setVisible,wrongAnswer,chooseNum} = this.state
+        var num = 0;
         var result = null;
         let overlayView = (
           <Overlay.View
             style={styles.overlayContainer}
-            modal={true}
+            modal={false}
+            
             overlayOpacity={0}
             ref={v => this.overlayView = v}
             >
             <View style={styles.overlay}>
                 {/* 第一层 */}
-                <View style={{flexDirection:"row"}}>
-                    <TouchableOpacity 
-                        style={{height: 20}}
-                        onPress={this.overlayGoback}
-                    >
-                        <SvgUri svgXmlData={goBack} width="30" height="30" />
-                    </TouchableOpacity>
-                    <View style={{marginTop:4,flexDirection:"row"}}>
+                <View style={{justifyContent:"center",alignItems:"center",position:"relative",marginTop:15}}>
+                    <View style={{marginTop:4,flexDirection:"row",position:"absolute",left:0}}>
+                        <TouchableOpacity 
+                            style={{height: 30,flexDirection:"row",width:"50%"}}
+                            onPress={()=>this.overlayView && this.overlayView.close()}
+                        >
+                            <SvgUri svgXmlData={goBack} width="30" height="30" />
                             <Text style={{fontSize:14,color:"gray"}}>返回</Text>
-                            <Text style={{fontSize:14,marginLeft:32,color:"gray"}}>我的成绩</Text>
+                        </TouchableOpacity>
+                        <View>
+                            <Text style={{fontSize:14,color:"gray"}}>我的成绩</Text>
+                        </View>
                     </View>
                 </View>
                 {/* 第二层 */}
@@ -127,8 +129,10 @@ export default class TestPage extends Component {
                         <Text style={{fontSize:25,color:"#7FFF00"}}>{totalScore}</Text>
                     </View>    
                     <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-around"}}>
+                        
                         {cards.map((v,i)=>{
                             if (i == chooseNum) {
+                                result = null
                                 result = <View style={{width:250}}>
                                             <Text style={{marginTop:10}}>{v.qs_question}</Text>
                                             <View style={{flexDirection:"row",justifyContent:"space-around",marginTop:10,marginBottom:30}}>
@@ -137,11 +141,12 @@ export default class TestPage extends Component {
                                             </View>
                                             <Text style={{fontSize:17,fontWeight:"300",color:"lightgreen"}}>正确答案：{v.qs_right}</Text>
                                             <Text style={{fontSize:17,fontWeight:"300",color:"red"}}>我的答案：{answers[i]}</Text>
+                                            {/* <Text>{setVisible.toString()}</Text> */}
                                         </View> 
                             }
                             return(
                                 <View>
-                                    <TouchableOpacity key={i} style={{
+                                    <TouchableOpacity style={{
                                         justifyContent:"center",
                                         alignItems:"center",
                                         height:40,
@@ -149,25 +154,31 @@ export default class TestPage extends Component {
                                         borderRadius:20,
                                         backgroundColor:wrongAnswer.includes(i+1)?"red":"lightgreen"
                                         }}
-                                        onPress={()=>this.setState({ chooseNum:i  })}
-                                    >
+                                        onPress={()=>{
+                                            result=null
+                                            this.setState({ chooseNum:i })
+                                        }}>
                                         <Text>{i+1}</Text>
                                     </TouchableOpacity>
                                     
                                 </View>
                             )
-                        })}
+                        })} 
                     </View>
+                </View>
+                {/* 第三层 */}
+                <View>
                     {result}
                 </View>
             </View>
           </Overlay.View>
         );
-        if(setVisible){
-            Overlay.show(overlayView);
-        }else{
-            this.overlayView && this.overlayView.close()
-        }
+        Overlay.show(overlayView);
+        // if(setVisible == true){
+        //     Overlay.show(overlayView);
+        // }else{
+        //     this.overlayView && this.overlayView.close()
+        // }
       }
     //未使用
     // onSwipedAll=()=>{
@@ -183,12 +194,12 @@ export default class TestPage extends Component {
     // }
 
     onSwipedAll=()=>{
-        this.setState({ setVisible:!this.state.visible })
+        this.setState({ setVisible:true })
         this.compareAnswer()
     }
 
     render() {
-        const {title,cards,currentIndex,totalScore,visible} = this.state
+        const {title,cards,currentIndex,totalScore} = this.state
         if(cards.length===0){
             return <></>
         }
@@ -235,14 +246,10 @@ export default class TestPage extends Component {
                             backgroundColor={'transparent'}
                             cardVerticalMargin={10}
                             stackSize= {6}>
-                            {/* <Button
-                                onPress={() => {console.log('oulala')}}
-                                title="Press me">
-                                You can press me
-                            </Button> */}
+
                         </Swiper>
                 </ImageBackground>
-                {this.state.setVisible?this.showOverlay():<></>}
+                {this.state.setVisible? this.showOverlay():null}
             </View>
         )
     }

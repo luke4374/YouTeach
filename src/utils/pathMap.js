@@ -43,17 +43,21 @@ export const MAIN_FINDCOURSE = '/findAllCourse/';
  */
 export const MAIN_COURSENUM = '/totalNum';
 /**
- * 课程跳转Get 语文
+ * 课程跳转Get 语文 废除
  */
 export const SUBJECT_CHINESE = '/findChn/';
 /**
- * 课程跳转Get 数学
+ * 课程跳转Get 数学 废除
  */
 export const SUBJECT_MATH = '/findMath/';
 /**
- * 课程跳转Get 英语
+ * 课程跳转Get 英语 废除
  */
 export const SUBJECT_ENGLISH = '/findEng/';
+/**
+ * 课程跳转Get
+ */
+export const FIND_BY_CID = '/findCourseById/'
 /**
  * 点击播放浏览+1 Get param->id
  */
@@ -98,3 +102,31 @@ export const CHAT_FINDUSER = '/findTeacherById/';
  * 通过课程名查找答案
  */
 export const TEST_FINDANSWERS = '/findAnswers/';
+/**
+ * 查询评论 get {c_id}
+ */
+export const FIND_COMMENT = '/findVideoComments/';
+/**
+ * 发布评论 post {c_id}{u_id}{a_content}
+ */
+export const UPDATE_COMMENT = '/addComment';
+/**
+ * 添加收藏 get {u_id}{c_id}
+ */
+export const ADD_COLLECTION = '/addCollection/';
+/**
+ * 查找是否收藏 get {u_id}{c_id}
+ */
+export const FIND_COLLECTION = '/findByCUId/';
+/**
+ * 查找用户收藏 get {u_id}
+ */
+export const FIND_COLL_BYUID = '/findCollectionById/';
+/**
+ * 删除收藏信息 delete {f_id}
+ */
+export const DELETE_COLLECTION = '/deleteByFId/';
+/**
+ * 通过 c/u_id 删除收藏
+ */
+export const DELE_COLL_BYCUID = '/deleteByCUId/';

@@ -26,17 +26,14 @@ import {
   Test
 } from "../res/fonts/iconSg";
 //import SplashScreen from 'react-native-splash-screen';
-import Feather from "react-native-vector-icons/Feather" ;
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons" ;
 import Nav from "./nav";
 import CustomModal from "../utils/CustomModal";
 import axios from "axios";
 import RootStore from "../mobx";
-const Stack = createStackNavigator()
-const Tab = createBottomTabNavigator()
 //全局数据引入 inject=>注入
 import { inject,observer } from "mobx-react";
 
-const LoginStack = createStackNavigator();
 @inject("RootStore","UserStore")
 // @observer
 export default class Main extends Component {
@@ -49,13 +46,14 @@ export default class Main extends Component {
         modalVisibility:true,
         search:"",
         Courses:[],
-        random:10
+        random:10,
+        grade:""
       }
 
       componentDidMount(){
         this.getTotalPage();
-        console.log("++++++++++++++++++");
-        console.log(this.props);
+        // console.log("++++++++++++++++++");
+        // console.log(this.props);
         this.getCourses();
       }
       //获取视频信息
@@ -137,16 +135,16 @@ export default class Main extends Component {
               <View>
                 <Text style={{margin:10,fontSize:16,fontWeight:"bold",color:"#555"}}>直播课程入口</Text>
                 <View style={styles.icons}>
-                  <TouchableOpacity onPress={()=>console.log(this.props.UserStore.user)}>
+                  <TouchableOpacity onPress={()=>this.props.navigation.navigate("LiveCourse",{title:"语文"})}>
                     <SvgUri svgXmlData={Chinese} width="49" height="49" />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={()=>Toast.message("加油建设中...",1000,"center")}>
+                  <TouchableOpacity onPress={()=>this.props.navigation.navigate("LiveCourse",{title:"数学"})}>
                     <SvgUri svgXmlData={Math} width="49" height="49" />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={()=>Toast.message("加油建设中...",1000,"center")}>
+                  <TouchableOpacity onPress={()=>this.props.navigation.navigate("LiveCourse",{title:"英语"})}>
                     <SvgUri svgXmlData={English} width="49" height="49" />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={()=>this.forceUpdate()}>
+                  <TouchableOpacity onPress={()=>this.props.navigation.navigate('TalentPage')}>
                     <SvgUri svgXmlData={Test} width="44" height="44" />
                   </TouchableOpacity>
                 </View>
@@ -163,81 +161,7 @@ export default class Main extends Component {
     render() {  
       const {LoginStat,search,Courses,refreshing} = this.state
         return (
-      //     <ImageHeaderScrollView
-      //     maxHeight={150}
-      //     minHeight={0}
-      //     renderForeground={() => (
-      //       <View style={styles.container} >
-      //         {/* 搜索框 开始 */}
-      //         <View>
-      //             <SearchBar
-      //               lightTheme round
-      //               containerStyle={styles.searchBoxContainer}
-      //               inputContainerStyle={styles.searchBox}
-      //               inputStyle={styles.input}
-      //               placeholder="请输入..."
-      //               onChangeText={this.updateSearch}
-      //               value={search}
-      //             />
-      //         </View>
-      //         {/* 搜索框 结束 */}
-      //         {/* 科目图标 开始 */}
-      //         <View>
-      //           <View style={styles.icons}>
-      //             <TouchableOpacity onPress={()=>console.log(this.props.UserStore.user)}>
-      //               <SvgUri svgXmlData={Chinese} width="49" height="49" />
-      //             </TouchableOpacity>
-      //             <TouchableOpacity onPress={()=>Toast.message("加油建设中...",1000,"center")}>
-      //               <SvgUri svgXmlData={Math} width="49" height="49" />
-      //             </TouchableOpacity>
-      //             <TouchableOpacity onPress={()=>Toast.message("加油建设中...",1000,"center")}>
-      //               <SvgUri svgXmlData={English} width="49" height="49" />
-      //             </TouchableOpacity>
-      //             <TouchableOpacity onPress={()=>Toast.message("加油建设中...",1000,"center")}>
-      //               <SvgUri svgXmlData={Test} width="44" height="44" />
-      //             </TouchableOpacity>
-      //           </View>
-      //           <View style={styles.iconsText}>
-      //             <Text style={{fontSize:13, color:"#666"}}>语文</Text>
-      //             <Text style={{fontSize:13, color:"#666"}}>数学</Text>
-      //             <Text style={{fontSize:13, color:"#666"}}>英语</Text>
-      //             <Text style={{fontSize:13, color:"#666"}}>测试</Text>
-      //           </View>
-      //         </View>
-      //   {/* 科目图标 结束  */}
-      //       </View>
-      //     )}
-      //   >
-      //     <View style={{   backgroundColor:"#E1E6ED"}}>
-      //     {/* FlatList 开始 */}
-      //     <ScrollView>
-      //       <View style={{height:500}}>
-      //         <FlatList
-      //         style={{flex:1}}
-      //           keyExtractor={(item,index)=>index.toString()}                
-      //           refreshing={refreshing}
-      //           onRefresh={()=>this.getCourses()}
-      //           onEndReached={()=>this.getCourses(2)}
-      //           numColumns={2}
-      //           // horizontal={false}
-      //           columnWrapperStyle={styles.listView}
-      //           // contentContainerStyle={styles.listView}
-      //           data={Courses}
-      //           renderItem={this.renderItem}
-      //           onEndReachedThreshold={3}
-      //         />
-      //       </View>
-      //       </ScrollView>
-      //     {/* FlatList 结束 */}
-      //     </View>
 
-      //  <View >
-      //   {/* 若不是登陆状态 则显示弹窗 */}
-      //     {this.props.RootStore.loginstat? <View></View> : <CustomModal title="啊哦~" message="您还未登录，是否前往登录"  ref="_customModal" visibility={this.state.modalVisibility}
-      //               onLeftPress={this.LeftPress} onRightPress={this.RightPress}/>}
-      //   {/* 弹窗 结束 */}
-      //  </View>
-      //  </ImageHeaderScrollView>
           <View style={styles.container}>
             
               <View>
@@ -247,16 +171,20 @@ export default class Main extends Component {
               </View>
             {/* 弹窗 结束 */}
               {/* 搜索框 开始 */}
-               <View>
-                   <SearchBar
-                     lightTheme round
-                     containerStyle={styles.searchBoxContainer}
-                     inputContainerStyle={styles.searchBox}
-                     inputStyle={styles.input}
-                     placeholder="请输入..."
-                     onChangeText={this.updateSearch}
-                     value={search}
-                   />
+               <View style={{flexDirection:"row",padding:7}}>
+                 <TouchableOpacity style={{justifyContent:"center",alignItems:"center",flexDirection:"row"}}>
+                    <Text style={{color:"#555"}}>年级</Text>
+                    <MaterialCommunityIcons name="unfold-more-horizontal" size={16} color="#555"/>
+                 </TouchableOpacity>
+                  <SearchBar
+                    lightTheme round
+                    containerStyle={styles.searchBoxContainer}
+                    inputContainerStyle={styles.searchBox}
+                    inputStyle={styles.input}
+                    placeholder="请输入..."
+                    onChangeText={this.updateSearch}
+                    value={search}
+                  />
                </View>
               {/* 搜索框 结束 */}
 
@@ -299,7 +227,7 @@ const styles = StyleSheet.create({
     // backgroundColor:"#333",
     borderRadius:50,
     height:30,
-    width:"80%",
+    width:250,
     alignSelf:'center'
   },
   input:{
