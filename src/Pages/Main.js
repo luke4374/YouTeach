@@ -11,7 +11,7 @@ import {
   Image,
   RefreshControl
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContext } from '@react-navigation/native';
 import {ImageHeaderScrollView} from 'react-native-image-header-scroll-view';
 import { createStackNavigator } from '@react-navigation/stack';
 import { BASE_URI,MAIN_FINDCOURSE,MAIN_COURSENUM } from "../utils/pathMap";
@@ -37,6 +37,7 @@ import { inject,observer } from "mobx-react";
 @inject("RootStore","UserStore")
 // @observer
 export default class Main extends Component {
+  static contextType = NavigationContext;
     state={
         // isRefreshing:true,//下拉刷新标记
         // isLoading:false,//上拉加载
@@ -120,7 +121,7 @@ export default class Main extends Component {
               />
             </View>
             <View style={{flex:1,marginTop:-20,padding:10}}>
-              <Text style={styles.courseInfo}>{item.c_name}</Text>
+              <Text style={styles.courseInfo}>{item.c_name.slice(0,24)}...</Text>
             </View>
             {/* 左下角信息 */}
             <View style={styles.leftcorner}>
@@ -144,7 +145,7 @@ export default class Main extends Component {
                   <TouchableOpacity onPress={()=>this.props.navigation.navigate("LiveCourse",{title:"英语"})}>
                     <SvgUri svgXmlData={English} width="49" height="49" />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={()=>this.props.navigation.navigate('TalentPage')}>
+                  <TouchableOpacity onPress={()=>this.context.navigate("发现")}>
                     <SvgUri svgXmlData={Test} width="44" height="44" />
                   </TouchableOpacity>
                 </View>

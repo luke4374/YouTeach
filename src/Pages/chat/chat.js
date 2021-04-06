@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import SvgUri from "react-native-svg-uri";
-import { BoyIcon,maleTeacher } from "../../res/fonts/iconSg";
+import { Text } from "react-native";
+
+import { BoyIcon,maleTeacher,goBack } from "../../res/fonts/iconSg";
 import {
   StyleSheet,
   View,
@@ -10,13 +12,14 @@ import {
   Platform,
 } from 'react-native'
 //文件操作库
-var RNFS = require('react-native-fs')
+import RNFS from'react-native-fs';
 
 var ReactNative = require('react-native')
 // 聊天ui库
 import IMUI from 'aurora-imui-react-native'
 import JMessage from '../../utils/JMessage'
 import { inject, observer } from 'mobx-react';
+import { TouchableOpacity } from 'react-native';
 var InputView = IMUI.ChatInput
 //消息展示列表
 var MessageListView = IMUI.MessageList
@@ -118,20 +121,21 @@ function constructNormalMessage() {
       console.log("------------");
       console.log(history);
       console.log("----------------");    
-      console.log(this.props.route.params);
+      // console.log(this.props.route.params);
+      console.log(this.props.UserStore.user);
 
       //消息数组
     var messages = []
     history.forEach(v=>{
         const message = constructNormalMessage();
-
-        if(v.from.username === this.props.UserStore.user.u_id){
+        console.log(v.from.username);
+        if(v.from.username != this.props.UserStore.user.u_id){
             //当前消息是属于发送者的
             message.isOutgoing = false;
-            message.fromUser.avatarPath = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534926548887&di=f107f4f8bd50fada6c5770ef27535277&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F11%2F67%2F23%2F69i58PICP37.jpg";
-        }else{
+            message.fromUser.avatarPath = "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.51yuansu.com%2Fpic2%2Fcover%2F00%2F36%2F49%2F5811d7c48840d_610.jpg&refer=http%3A%2F%2Fpic.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1619951390&t=a95a84e634999ea19e2f488538b9c8df";
+          }else{
             message.isOutgoing = true;
-            message.fromUser.avatarPath = "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.51yuansu.com%2Fpic2%2Fcover%2F00%2F36%2F49%2F5811d7c48840d_610.jpg&refer=http%3A%2F%2Fpic.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg";
+            message.fromUser.avatarPath = "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.51yuansu.com%2Fpic2%2Fcover%2F00%2F30%2F73%2F58108f4b2a480_610.jpg&refer=http%3A%2F%2Fwww.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg";
         }
         //设置消息相关的用户头像
         // message.fromUser.avatarUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534926548887&di=f107f4f8bd50fada6c5770ef27535277&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F11%2F67%2F23%2F69i58PICP37.jpg",//1
@@ -141,7 +145,7 @@ function constructNormalMessage() {
           // 设置消息内容
           message.text = v.text;
         }else if(v.type === "image"){
-          message.msgType = 'image';
+          message.msgType = 'image'
           // 设置消息内容
           message.mediaPath = v.thumbPath;
         }
@@ -289,10 +293,15 @@ function constructNormalMessage() {
   }
 // 发送文本消息
   onSendText = async(text) => {
-    const message = constructNormalMessage()
+    const message = constructNormalMessage() 
     var evenmessage = constructNormalMessage()
     message.msgType = 'text'
     message.text = text
+    if (this.props.UserStore.user.u_usertype == 1) {
+      message.fromUser.avatarPath = "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.51yuansu.com%2Fpic2%2Fcover%2F00%2F30%2F73%2F58108f4b2a480_610.jpg&refer=http%3A%2F%2Fwww.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg";
+    }else{
+      message.fromUser.avatarPath = "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.51yuansu.com%2Fpic2%2Fcover%2F00%2F36%2F49%2F5811d7c48840d_610.jpg&refer=http%3A%2F%2Fpic.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg";
+    }
     AuroraIController.appendMessages([message])
     //极光来实现发送文本
     const name = this.props.route.params.u_id;
@@ -465,7 +474,15 @@ function constructNormalMessage() {
       <View style={styles.container}>
         <View style={this.state.navigationBar}
           ref="NavigatorView">
-          <Button
+            <View style={{alignItems:"center",padding:10,flexDirection:"row"}}>
+              <TouchableOpacity onPress={()=>this.props.navigation.goBack()}>
+                  <SvgUri svgXmlData={goBack} height="30" width="30"/>
+              </TouchableOpacity>
+              <View style={{justifyContent:"center",alignItems:"center",width:"83%"}}>
+                <Text style={{fontSize:15,color:"#111"}}>{this.props.route.params.u_realname}</Text>
+              </View>
+            </View>
+          {/* <Button
             style={styles.sendCustomBtn}
             title={this.props.route.params.u_realname}
             onPress={() => {
@@ -505,7 +522,7 @@ function constructNormalMessage() {
                 AuroraIController.appendMessages([message]);
               }
             }}>
-          </Button>
+          </Button> */}
         </View>
         <MessageListView style={this.state.messageListLayout}
           ref="MessageList"
@@ -576,7 +593,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   inputView: {

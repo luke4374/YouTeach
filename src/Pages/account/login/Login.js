@@ -35,7 +35,6 @@ export default class index extends Component {
         loginstat:false
     }
     componentDidMount() {
-        console.log("~~~~~~~~~~~~~~~~~~~~~~");
         console.log(this.props);
     }
     // constructor(){
@@ -74,7 +73,7 @@ export default class index extends Component {
         }
     }
     passwordOnSubmit=async()=>{
-        const {password} = this.state;
+        const {password,u_username} = this.state;
         const res = await request.post(ACCOUNT_LOGIN,{
             u_username:this.state.username,
             u_password:password

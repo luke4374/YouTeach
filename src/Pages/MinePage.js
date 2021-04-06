@@ -16,6 +16,7 @@ import SvgUri from "react-native-svg-uri";
 import { GirlIcon, UnLogin,BoyIcon,Collect,Plane,Tongxun,Settings,Talk,find } from "../res/fonts/iconSg";
 import { observer,inject } from 'mobx-react';
 import request from '../utils/request';
+import JMessage from "../utils/JMessage";
 import { ACCOUNT_FINDBYID } from "../utils/pathMap";
 import { Alert } from 'react-native';
 import Toast from '../utils/Toast';
@@ -47,7 +48,7 @@ export default class MinePage extends Component {
             usertype:user.data.u_usertype,
             Gender: user.data.u_gender,
             username: user.data.u_username,
-            LoginStat:true
+            // LoginStat:true
           });
         this.setState({ isRefreshing:false  });
         console.log(user);
@@ -71,7 +72,7 @@ export default class MinePage extends Component {
         if(this.props.UserStore.user.u_usertype == 1){
             return(
                 <View style={styles.bottomBlock}>
-                <TouchableOpacity >
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate("UpdateInfo")}>
                     <View style={{flexDirection:"row"}}>
                         <SvgUri svgXmlData={find} width="25" height="25"/>
                         <Text style={{marginTop:2,marginLeft:5,fontSize:14,color:"#555"}}>上传教师信息</Text>
@@ -156,12 +157,17 @@ export default class MinePage extends Component {
                 {
                     text:"确认",
                     onPress:()=>{
-                        this.props.UserStore.setUser(null),
+                        this.props.UserStore.clearUser(),
                         this.props.RootStore.setLoginStat()
+                        JMessage.logout();
                     }
                 }
             ]
         )
+    }
+    //个人信息更新
+    userUpdate=()=>{
+
     }
     render() {
         const {isRefreshing} =this.state
@@ -202,7 +208,11 @@ export default class MinePage extends Component {
                 </View>
                     {/* 选项栏 开始 */}
                     <View style={styles.bottomBlock}>
-                        <TouchableOpacity>
+                        <TouchableOpacity 
+                            onPress={()=>{
+                                {this.props.RootStore.loginstat?this.props.navigation.navigate("userUpdate"):Toast.sad("您未登陆哦",1000,"center")}
+                            }}
+                        >
                             <View style={{flexDirection:"row"}}>
                                 <SvgUri svgXmlData={Tongxun} width="25" height="25"/>
                                 <Text style={{marginTop:2,marginLeft:5,fontSize:14,color:"#555"}}>个人信息</Text>

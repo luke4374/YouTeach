@@ -9,12 +9,15 @@ import UserInfo from "./account/userinfo/index";
 import Video from "./VideoPage";
 import nav from "./nav";
 import Demo from "./Demo";
-import LiveCourse from "./LiveCourse";
+import LiveCourse from "./LiveCourse/LiveCourse";
 import Test from "./TestPage";
 import TeacherInfo from "./Teacher/Info";
 import Chat from "./chat/chat";
 import AbilityInfo from "./Ability/AbilityInfo";
 import Collection from "./Collection";
+import userUpdate from "./account/userUpdate";
+import UpdateInfo from "./Teacher/UpdateInfo";
+import LiveInfo from "./LiveCourse/LiveInfo";
 const HomeStack = createStackNavigator();
 export default class HomeScreen extends Component {
  
@@ -36,6 +39,9 @@ export default class HomeScreen extends Component {
                 <HomeStack.Screen  name="Demo" component={Demo} />
                 <HomeStack.Screen  name="LiveCourse" component={LiveCourse} />
                 <HomeStack.Screen  name="Collection" component={Collection} />
+                <HomeStack.Screen  name="userUpdate" component={userUpdate} />
+                <HomeStack.Screen  name="UpdateInfo" component={UpdateInfo} />
+                <HomeStack.Screen  name="LiveInfo" component={LiveInfo} />
             </HomeStack.Navigator>
             </NavigationContainer>
         )

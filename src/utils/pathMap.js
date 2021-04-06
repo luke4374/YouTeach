@@ -130,3 +130,15 @@ export const DELETE_COLLECTION = '/deleteByFId/';
  * 通过 c/u_id 删除收藏
  */
 export const DELE_COLL_BYCUID = '/deleteByCUId/';
+/**
+ * 查找聊天对象 对话框 post String[]
+ */
+export const FIND_CHAT_USERS = '/findChatUsers';
+/**
+ * 教师信息上传 post
+ */
+export const ADD_TEACHERINFO = '/addInfo';
+/**
+ * 找到所有直播课程
+ */
+export const FIND_LIVECOURSE = '/findLiveCourse';

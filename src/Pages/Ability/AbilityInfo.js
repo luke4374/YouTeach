@@ -3,6 +3,7 @@ import { Text, View , StyleSheet,ScrollView} from 'react-native'
 import request from "../../utils/request";
 import { ABILITY_DETAIL } from "../../utils/pathMap";
 import TopNav from "../../components/TopNav";
+import date from "../../utils/date";
 
 export default class AbilityInfo extends Component {
 
@@ -31,9 +32,9 @@ export default class AbilityInfo extends Component {
                 <View style={styles.context}>
                     <ScrollView>
                         <Text style={{fontSize:20,fontWeight:"bold"}}> {Detail.title} </Text>
-                        <View style={{flexDirection:"row"}}>
+                        <View style={{flexDirection:"row",justifyContent:"space-around"}}>
                             <Text style={{fontSize:13,color:"#999"}}> {Detail.author} </Text>
-                            <Text style={{fontSize:13,marginLeft:70,color:"#999"}}> {Detail.post_time} </Text>
+                            <Text style={{fontSize:13,marginLeft:120,color:"#999"}}> {date(Detail.post_time).format("YYYY-MM-DD")} </Text>
                         </View>
                         <Text style={{fontSize:13,color:"#444"}}> {Detail.content} </Text>
                     </ScrollView>

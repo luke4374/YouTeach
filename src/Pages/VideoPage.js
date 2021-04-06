@@ -206,19 +206,20 @@ export default class ClassPage extends Component {
                                 <View style={{marginLeft:6}}>{Btn}</View>   
                             </TouchableWithoutFeedback>
                             {/* 播放按键 结束 */}
-                            <Text style={{color:"#555",marginLeft:5}}>{this.formatMediaTime(this.state.currentTime)}</Text>
+                            <Text style={{color:"#444",margin:10}}>{this.formatMediaTime(this.state.currentTime)}</Text>
                             <Slider 
-                                style={{width: 160, height: 40}} 
+                                style={{width: 160, height: 20}} 
+                                thumbStyle={{width:15,height:15}}
                                 value={this.state.sliderValue}
                                 maximumValue={this.state.duration}
                                 thumbTintColor="#eee" 
                                 thumbTouchSize={{width:10,height:10}}          
-                                minimumTrackTintColor="red"
-                                maximumTrackTintColor="#ccc"
+                                minimumTrackTintColor="#FFF"
+                                maximumTrackTintColor="#C0C0C0"
                                 step={1}
                                 onValueChange={this.customerSliderValue}
                             />
-                            <Text style={{color:"#555",margin:10}}>{this.formatMediaTime(this.state.duration)}</Text>
+                            <Text style={{color:"#444",margin:10}}>{this.formatMediaTime(this.state.duration)}</Text>
                         </View>
                         {/* 全屏按钮 */}
                     </View>   
@@ -355,7 +356,7 @@ export default class ClassPage extends Component {
                                 <Text style={{fontSize:10,color:"gray",marginTop:0,marginLeft:4,flex:2}}>收藏</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={{marginLeft:15,marginTop:-20,height:40}}>
+                        <View style={{marginLeft:10,marginTop:-20,height:40}}>
                             <Text style={{fontSize:10,color:"gray",marginTop:10}}>{viewNum} 浏览</Text>
                         </View>
                         {/* 分割线 */}
@@ -488,7 +489,7 @@ const styles = StyleSheet.create({
         justifyContent:"space-around",
         padding:10,
         marginTop:-10,
-        height:90
+        height:100
     },
     otherCourse:{
         height:160,
