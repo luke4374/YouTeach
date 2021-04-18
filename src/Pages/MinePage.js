@@ -198,12 +198,14 @@ export default class MinePage extends Component {
                         {/* <Text>登陆状态：{this.props.RootStore.loginstat.toString()}</Text> */}
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={()=>console.log(this.props.navigation.params)}
+                        onPress={()=>{
+                            {this.props.RootStore.loginstat?this.props.navigation.navigate("MyLiveCourse"):Toast.sad("您未登陆哦",1000,"center")}
+                        }}
                     >
                         <View style={{marginLeft:10}}> 
                             <SvgUri svgXmlData={Plane} width="35" height="35"/>
                         </View>
-                        <Text style={{marginTop:5,fontSize:14,color:"#888"}}>我的报名</Text>
+                        <Text style={{marginTop:5,fontSize:14,color:"#888"}}>直播课程</Text>
                     </TouchableOpacity>
                 </View>
                     {/* 选项栏 开始 */}

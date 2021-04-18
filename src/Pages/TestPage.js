@@ -86,116 +86,22 @@ export default class TestPage extends Component {
         this.state.answers.push(choice)
         console.log(this.state.answers);
     }
-    
-    overlayGoback=()=>{
-        this.setState({ setVisible:false  });
-        console.log(this.state.setVisible)
-        this.props.navigation.navigate("Nav")
-    }
 
-    showOverlay=()=> {
-        const {totalScore,myScore,cards,answers,setVisible,wrongAnswer,chooseNum} = this.state
-        var num = 0;
-        var result = null;
-        let overlayView = (
-          <Overlay.View
-            style={styles.overlayContainer}
-            modal={false}
-            
-            overlayOpacity={0}
-            ref={v => this.overlayView = v}
-            >
-            <View style={styles.overlay}>
-                {/* 第一层 */}
-                <View style={{justifyContent:"center",alignItems:"center",position:"relative",marginTop:15}}>
-                    <View style={{marginTop:4,flexDirection:"row",position:"absolute",left:0}}>
-                        <TouchableOpacity 
-                            style={{height: 30,flexDirection:"row",width:"50%"}}
-                            onPress={()=>this.overlayView && this.overlayView.close()}
-                        >
-                            <SvgUri svgXmlData={goBack} width="30" height="30" />
-                            <Text style={{fontSize:14,color:"gray"}}>返回</Text>
-                        </TouchableOpacity>
-                        <View>
-                            <Text style={{fontSize:14,color:"gray"}}>我的成绩</Text>
-                        </View>
-                    </View>
-                </View>
-                {/* 第二层 */}
-                <View style={{marginTop:30}}>
-                    <View style={styles.Score}>
-                        <Text style={{fontSize:25,color:"#DC143C"}}>{myScore}</Text>
-                        <Text style={{fontSize:25}}>/</Text>
-                        <Text style={{fontSize:25,color:"#7FFF00"}}>{totalScore}</Text>
-                    </View>    
-                    <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-around"}}>
-                        
-                        {cards.map((v,i)=>{
-                            if (i == chooseNum) {
-                                result = null
-                                result = <View style={{width:250}}>
-                                            <Text style={{marginTop:10}}>{v.qs_question}</Text>
-                                            <View style={{flexDirection:"row",justifyContent:"space-around",marginTop:10,marginBottom:30}}>
-                                                <Text style={{fontSize:15}}>A: {v.qs_choiceA}</Text>
-                                                <Text style={{fontSize:15}}>B: {v.qs_choiceB}</Text>
-                                            </View>
-                                            <Text style={{fontSize:17,fontWeight:"300",color:"lightgreen"}}>正确答案：{v.qs_right}</Text>
-                                            <Text style={{fontSize:17,fontWeight:"300",color:"red"}}>我的答案：{answers[i]}</Text>
-                                            {/* <Text>{setVisible.toString()}</Text> */}
-                                        </View> 
-                            }
-                            return(
-                                <View>
-                                    <TouchableOpacity style={{
-                                        justifyContent:"center",
-                                        alignItems:"center",
-                                        height:40,
-                                        width:40,
-                                        borderRadius:20,
-                                        backgroundColor:wrongAnswer.includes(i+1)?"red":"lightgreen"
-                                        }}
-                                        onPress={()=>{
-                                            result=null
-                                            this.setState({ chooseNum:i })
-                                        }}>
-                                        <Text>{i+1}</Text>
-                                    </TouchableOpacity>
-                                    
-                                </View>
-                            )
-                        })} 
-                    </View>
-                </View>
-                {/* 第三层 */}
-                <View>
-                    {result}
-                </View>
-            </View>
-          </Overlay.View>
-        );
-        Overlay.show(overlayView);
-        // if(setVisible == true){
-        //     Overlay.show(overlayView);
-        // }else{
-        //     this.overlayView && this.overlayView.close()
-        // }
-      }
-    //未使用
-    // onSwipedAll=()=>{
-    //     const {visible,setVisible} = this.state;
-    //     Toast.smile("已完成所有题目~",1000,"center")
-    //     this.setState({ setVisible:!this.state.visible  });
-    //     console.log(setVisible);
-    //     // if(this.state.showResult){
-    //     //     this.props.navigation.goBack();
-    //     //     console.log(this.state.showResult);
-    //     // }
-    //     // this.renderResult()
-    // }
+
 
     onSwipedAll=()=>{
-        this.setState({ setVisible:true })
+        const {totalScore,myScore,cards,answers,wrongAnswer,Score,rightAnswer} = this.state;
+        // this.setState({ setVisible:true })
         this.compareAnswer()
+        this.props.navigation.navigate("Demo",{
+            rightAnswer,
+            totalScore,
+            myScore,
+            cards,
+            answers,
+            wrongAnswer,
+            Score
+        })
     }
 
     render() {
@@ -213,43 +119,41 @@ export default class TestPage extends Component {
                     source={require("../pic/redbg.jpg")}
                 >
                 {/* 背景图片结束 */}
-                        <Swiper
-                            ref={ ref => this.swiperRef = ref}
-                            cards={cards}
-                            renderCard={(card) => {
-                                return (
-                                    <View style={styles.card}>
-                                        <View style={{alignItems:"center",marginTop:10}}>
-                                            <SvgUri svgXmlData={triqueta} width="50" height="50" />
-                                        </View>
-                                        <Text style={styles.text}>{card.qs_question}</Text>
-                                        {/* 选项栏 */}
-                                        <View style={styles.choice}>
-                                            <TouchableOpacity onPress={this.setChoice.bind(this,"A")}>
-                                                <SvgUri svgXmlData={AAA} width="60" height="60" />
-                                                <Text style={styles.ChoiceText}>{card.qs_choiceA}</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity onPress={this.setChoice.bind(this,"B")}>
-                                                <SvgUri svgXmlData={BBB} width="60" height="60" />
-                                                <Text style={styles.ChoiceText}>{card.qs_choiceB}</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        {/* 选项结束 */}
+                    <Swiper
+                        ref={ ref => this.swiperRef = ref}
+                        cards={cards}
+                        renderCard={(card) => {
+                            return (
+                                <View style={styles.card}>
+                                    <View style={{alignItems:"center",marginTop:10}}>
+                                        <SvgUri svgXmlData={triqueta} width="50" height="50" />
                                     </View>
-                                )
-                            }}
-                            onSwiped={(cardIndex) => {this.setState({ currentIndex:cardIndex  });}}
-                            onSwipedAll={this.onSwipedAll}
-                            onSwipedLeft={this.sendChoice.bind(this,"A")}
-                            onSwipedRight={this.sendChoice.bind(this,"B")}
-                            cardIndex={currentIndex}
-                            backgroundColor={'transparent'}
-                            cardVerticalMargin={10}
-                            stackSize= {6}>
-
+                                    <Text style={styles.text}>{card.qs_question}</Text>
+                                    {/* 选项栏 */}
+                                    <View style={styles.choice}>
+                                        <TouchableOpacity onPress={this.setChoice.bind(this,"A")}>
+                                            <SvgUri svgXmlData={AAA} width="60" height="60" />
+                                            <Text style={styles.ChoiceText}>{card.qs_choiceA}</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={this.setChoice.bind(this,"B")}>
+                                            <SvgUri svgXmlData={BBB} width="60" height="60" />
+                                            <Text style={styles.ChoiceText}>{card.qs_choiceB}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    {/* 选项结束 */}
+                                </View>
+                            )
+                        }}
+                        onSwiped={(cardIndex) => {this.setState({ currentIndex:cardIndex  });}}
+                        onSwipedAll={this.onSwipedAll}
+                        onSwipedLeft={this.sendChoice.bind(this,"A")}
+                        onSwipedRight={this.sendChoice.bind(this,"B")}
+                        cardIndex={currentIndex}
+                        backgroundColor={'transparent'}
+                        cardVerticalMargin={10}
+                        stackSize= {6}>
                         </Swiper>
                 </ImageBackground>
-                {this.state.setVisible? this.showOverlay():null}
             </View>
         )
     }
@@ -287,22 +191,5 @@ const styles = StyleSheet.create({
         fontSize:16,
         fontWeight:"500"
     },
-    overlayContainer:{
-        alignItems: 'center', 
-        justifyContent: 'center',
-    },
-    overlay:{
-        backgroundColor: '#E1FFFF',
-        padding: 10,
-        borderRadius: 15,
-        // alignItems: 'center',
-        width:270,
-        height:450
-    },
-    Score:{
-        alignItems:"center",
-        justifyContent:"center",
-        flexDirection:"row",
-        marginBottom:30
-    }
+   
 })

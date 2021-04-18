@@ -69,7 +69,7 @@ export default class MyCourse extends Component {
         const res = await request.get(CHAT_GetTeacherInfoById+Id)
         // console.log(res);
     }
-
+    //渲染我的消息页
     renderMessage=({item})=>{
         // {userlist.map((v,i) => {
             let icon = null;

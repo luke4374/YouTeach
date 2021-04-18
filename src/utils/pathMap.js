@@ -25,6 +25,10 @@ export const ACCOUNT_SAVE = '/save';
  */
 export const ACCOUNT_UPDATE = '/update';
 /**
+ * 更新资料PUT
+ */
+ export const ACCOUNT_REGUPDATE = '/regUpdate';
+/**
  * 通过Id查找用户GET /{id}
  */
  export const ACCOUNT_FINDBYID = "/findById/";
@@ -115,6 +119,10 @@ export const UPDATE_COMMENT = '/addComment';
  */
 export const ADD_COLLECTION = '/addCollection/';
 /**
+ * 添加测试收藏 get {u_id}{c_id}
+ */
+ export const ADD_TestCOLLECTION = '/addTest/';
+/**
  * 查找是否收藏 get {u_id}{c_id}
  */
 export const FIND_COLLECTION = '/findByCUId/';
@@ -129,7 +137,11 @@ export const DELETE_COLLECTION = '/deleteByFId/';
 /**
  * 通过 c/u_id 删除收藏
  */
-export const DELE_COLL_BYCUID = '/deleteByCUId/';
+export const DELE_Video_COLL_BYCUID = '/deleteVideoByCUId/';
+/**
+ * 通过 c/u_id 删除收藏
+ */
+ export const DELE_Test_COLL_BYCUID = '/deleteTestByCUId/';
 /**
  * 查找聊天对象 对话框 post String[]
  */
@@ -141,4 +153,32 @@ export const ADD_TEACHERINFO = '/addInfo';
 /**
  * 找到所有直播课程
  */
-export const FIND_LIVECOURSE = '/findLiveCourse';
+export const FIND_LIVECOURSE = '/findLiveCourse/';
+/**
+ * 查看课程状态
+ */
+export const Check_LiveStat = '/CheckLiveStat/';
+/**
+ * 报名直播课 get {u_id}{l_id}
+ */
+export const Live_SignUp = '/SignUp/';
+/**
+ * 取消报名 dele {u_id}{l_id}
+ */
+export const Dele_SignUp = '/UnSignUp/';
+/**
+ * 查找报名信息 {u_id}
+ */
+export const Find_Signing = '/findSigning/';
+/**
+ * 查找教师课程
+ */
+export const Find_Class = '/findClass/';
+/**
+ * 查找user报名信息
+ */
+export const Find_SignByid = '/findSignByids/';
+/**
+ * 添加直播房间号 GET
+ */
+export const Add_Channel = '/addChannel/';

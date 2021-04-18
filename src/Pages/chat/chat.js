@@ -298,6 +298,7 @@ function constructNormalMessage() {
     message.msgType = 'text'
     message.text = text
     if (this.props.UserStore.user.u_usertype == 1) {
+      //设置教师头像
       message.fromUser.avatarPath = "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.51yuansu.com%2Fpic2%2Fcover%2F00%2F30%2F73%2F58108f4b2a480_610.jpg&refer=http%3A%2F%2Fwww.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg";
     }else{
       message.fromUser.avatarPath = "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.51yuansu.com%2Fpic2%2Fcover%2F00%2F36%2F49%2F5811d7c48840d_610.jpg&refer=http%3A%2F%2Fpic.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg";

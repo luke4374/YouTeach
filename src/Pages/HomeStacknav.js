@@ -18,6 +18,11 @@ import Collection from "./Collection";
 import userUpdate from "./account/userUpdate";
 import UpdateInfo from "./Teacher/UpdateInfo";
 import LiveInfo from "./LiveCourse/LiveInfo";
+import MyLiveCourse from "./LiveCourse/MyLiveCourse";
+import AgoraLive from "./LiveCourse/AgoraLive";
+import LiveClass from "./LiveCourse/LiveClass";
+import LiveVideo from "./LiveCourse/Video";
+
 const HomeStack = createStackNavigator();
 export default class HomeScreen extends Component {
  
@@ -26,7 +31,7 @@ export default class HomeScreen extends Component {
         return (
             <NavigationContainer>
                 {/* initialRouteName="UserInfo" */}
-            <HomeStack.Navigator headerMode="none"  >
+            <HomeStack.Navigator headerMode="none" >
                 <HomeStack.Screen  name="Nav" component={nav} />
                 <HomeStack.Screen name="Login" component={Login} />
                 <HomeStack.Screen name="Chat" component={Chat} />
@@ -42,6 +47,10 @@ export default class HomeScreen extends Component {
                 <HomeStack.Screen  name="userUpdate" component={userUpdate} />
                 <HomeStack.Screen  name="UpdateInfo" component={UpdateInfo} />
                 <HomeStack.Screen  name="LiveInfo" component={LiveInfo} />
+                <HomeStack.Screen  name="MyLiveCourse" component={MyLiveCourse} />
+                <HomeStack.Screen  name="AgoraLive" component={AgoraLive} />
+                <HomeStack.Screen  name="LiveClass" component={LiveClass} />
+                <HomeStack.Screen  name="LiveVideo" component={LiveVideo} />
             </HomeStack.Navigator>
             </NavigationContainer>
         )

@@ -22,7 +22,7 @@ import Toast from "../../../utils/Toast";
 import ImagePicker from "react-native-image-crop-picker";
 import { Overlay } from "teaset";
 import request from "../../../utils/request";
-import { ACCOUNT_UPDATE } from "../../../utils/pathMap";
+import { ACCOUNT_REGUPDATE,ACCOUNT_SAVE } from "../../../utils/pathMap";
 import { inject,observer } from "mobx-react";
 import JMessage from "../../../utils/JMessage";
 
@@ -30,7 +30,7 @@ import JMessage from "../../../utils/JMessage";
 @observer
 export default class index extends Component {
     grade=[
-        '请选择年级','初一','初二','初三','高一','高二','高三'
+        '请选择年级','初一','初二','初三',
     ]
     state={
         //真实姓名
@@ -116,8 +116,7 @@ export default class index extends Component {
         //     console.log(image);
         // });
         const {u_phone} = this.props.route.params;
-        console.log(u_phone)
-        const update = await request.put(ACCOUNT_UPDATE,{
+        const update = await request.post(ACCOUNT_REGUPDATE,{
             u_phone:u_phone,
             u_realname:u_realname,
             u_gender:u_gender,
@@ -125,6 +124,7 @@ export default class index extends Component {
             u_usertype:u_usertype,
             u_grade:u_grade
         })
+        console.log(update)
         if(update.status != 1){
             Toast.sad("注册失败...")
             return;

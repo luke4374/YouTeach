@@ -1,16 +1,11 @@
 import React, { Component,useState } from 'react'
 import { Text, View,StyleSheet,Dimensions } from 'react-native';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StackNavigator } from "react-navigation";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //import SplashScreen from 'react-native-splash-screen';
 import Feather from "react-native-vector-icons/Feather" ;
-import { Button, Overlay } from 'react-native-elements';
-import Login from "./account/login/Login";
-import CustomModal from "../utils/CustomModal";
-import TestScreen from "./HomeStacknav";
 import MinePage from './MinePage';
 import TalentPage from './TalentPage';
 import MyCourse from './MyCourse';
@@ -25,10 +20,6 @@ const Tab = createBottomTabNavigator()
 @inject("UserStore","RootStore")
 @observer
 export default class Nav extends Component {
-
-  async componentDidMount() {
-    
-  }
 
     render() {
       const { navigate } = this.props.navigation;

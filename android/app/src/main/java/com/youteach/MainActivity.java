@@ -1,6 +1,8 @@
-package com.youteach;
 
+package com.youteach;
+import android.os.Bundle; 
 import com.facebook.react.ReactActivity;
+import org.devio.rn.splashscreen.SplashScreen; 
 
 public class MainActivity extends ReactActivity {
 
@@ -12,4 +14,13 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "YouTeach";
   }
+
+   /**
+    * 设置启动页
+    */
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          SplashScreen.show(this);  // 展示启动页设置代码
+          super.onCreate(savedInstanceState);
+      }
 }

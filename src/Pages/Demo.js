@@ -4,33 +4,14 @@ import {
   View,
   StyleSheet,
   Dimensions, 
-  ScrollView, 
-  Button,
   TouchableOpacity,
   FlatList,
-  Image,
-  ImageBackground
 } from 'react-native';
-import {
-  CodeField,
-  Cursor
-} from 'react-native-confirmation-code-field';
+import { goBack,question } from "../res/fonts/iconSg";
 import TopNavHome from "../components/TopNav";
-import { Overlay } from "teaset";
-import AntDesign from "react-native-vector-icons/AntDesign" ;
-import request from "../utils/request";
-import { DELETE_COLLECTION, FIND_COLL_BYUID } from "../utils/pathMap";
-//视频播放组件
-import Slider from 'react-native-slider';
-import Video from 'react-native-video';
-//Jmessage
-import JMessage from "../utils/JMessage";
+import SvgUri from "react-native-svg-uri";
 import { inject, observer } from "mobx-react";
 import Toast from '../utils/Toast';
- 
-let screenWidth  = Dimensions.get('window').width;
-let screenHeight = Dimensions.get('window').height;
-console.log(screenWidth+"   "+screenHeight+"带有小数");
 
 @inject("RootStore","UserStore")
 @observer    
@@ -38,112 +19,131 @@ export default class Demo extends Component {
 
     state = {
       // status :this.props.RootStore.status,
-      statement:false,
-      visible:false,
-      setVisible:false,
-      collection:[]
+      totalScore:this.props.route.params.totalScore,
+      Score:this.props.route.params.Score,
+      myScore:0,
+      cards:this.props.route.params.cards,
+      answers:this.props.route.params.answers,
+      wrongAnswer:this.props.route.params.wrongAnswer,
+      rightAnswer:this.props.route.params.rightAnswer,
+      chooseNum:0
     }
     componentDidMount() {
-      this.getCollection();
+      const { rightAnswer,answers,wrongAnswer,totalScore,Score,myScore } = this.state
+      // this.getCollection();
+      this.compareAnswer()
+      console.log(rightAnswer,answers,wrongAnswer,totalScore,Score,myScore);
     }
-    getCollection=async()=>{
-      const res = await request.get(FIND_COLL_BYUID+"6013");
-      console.log(res);
-      this.setState({ collection:res  });
-    }
-
-    deleteCollection=async(fid)=>{
-      const res = await request.delete(DELETE_COLLECTION+fid);
-      if(res.status == 1){
-        Toast.message("取消收藏",1000,"bottom");
-        this.getCollection();
+    //检查答案
+    compareAnswer=()=>{
+      const { rightAnswer,answers,wrongAnswer,totalScore,Score } = this.state
+      let tempScore = totalScore
+      //判断数组长度是否相等
+      if(rightAnswer.length == answers.length){
+          for (let i = 0; i < rightAnswer.length; i++) {
+              if(rightAnswer[i] != answers[i]){
+                  tempScore -= Score
+                  wrongAnswer.push(i+1)
+                  console.log("错误答案");
+                  console.log(wrongAnswer);
+              }else{
+                  wrongAnswer.push(0)
+              }
+          }
+          this.setState({ myScore: tempScore  });
+      }else{
+          Toast.sad("抱歉出错啦",1000,"center")
       }
-      console.log(res);
-    }
 
+  }
   render(){
-    const {statement,collection} = this.state
+    const {totalScore,myScore,cards,answers,wrongAnswer,chooseNum} = this.state
+    var result = null;
     return(
       <View style={styles.container}>
-        <TopNavHome title={"我的收藏"}/>
-          <View>
-            {collection.map((v,i)=>
-            <View style={{justifyContent:"center"}}>
-              <TouchableOpacity style={{flexDirection:"row",height:95,padding:6}} 
-                onPress={()=>this.props.navigation.navigate('Video',{
-                  c_id:v.c_id,
-                  c_subject:v.c_subject
-                })}>
-                <View style={{width:"38%"}}>
-                  <Image 
-                      source={{uri:v.c_pic}} 
-                      style={{width:120,height:80,borderRadius:15}}
-                  />
+                   <View style={styles.overlay}>
+                {/* 第一层 */}
+                <View style={{width:"100%",padding:10,position:"relative",justifyContent:"center"}}>
+                      <View style={{position:"absolute"}}>
+                        <TouchableOpacity 
+                            style={{height: 30,flexDirection:"row",}}
+                            onPress={()=>{this.props.navigation.navigate("Nav")}}
+                        >
+                            <SvgUri svgXmlData={goBack} width="30" height="30" />
+                            <Text style={{fontSize:14,color:"#666",marginTop:3}}>返回</Text>
+                        </TouchableOpacity>
+                      </View>
+                        <View style={{alignSelf:"center"}}>
+                            <Text style={{fontSize:14,color:"#666"}}>我的成绩</Text>
+                        </View>
                 </View>
-                <View style={{width:"63%",position:"relative",margin:6}}>
-                  <Text style={{marginBottom:10}}>{v.c_name}</Text>
-                  <TouchableOpacity style={{position:"absolute",right:20,top:50}}
-                    onPress={this.deleteCollection.bind(this,v.f_id)}
-                  >
-                    <AntDesign name="delete" size={25} color="#C0C0C0"/>
-                  </TouchableOpacity>
+                {/* 第二层 */}
+                <View style={{marginTop:30}}>
+                    <View style={styles.Score}>
+                        <Text style={{fontSize:30,color:"#DC143C"}}>{myScore}</Text>
+                        <Text style={{fontSize:30}}>/</Text>
+                        <Text style={{fontSize:30,color:"#7FFF00"}}>{totalScore}</Text>
+                    </View>    
+                    <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-around"}}>
+                        
+                        {cards.map((v,i)=>{
+                            if (i == chooseNum) {
+                                result = null
+                                result = <View style={{marginTop:30}}>
+                                            <Text style={{marginTop:10}}>{v.qs_question}</Text>
+                                            <View style={{justifyContent:"space-around",marginTop:10,marginBottom:30}}>
+                                                <Text style={{fontSize:15}}>A: {v.qs_choiceA}</Text>
+                                                <Text style={{fontSize:15}}>B: {v.qs_choiceB}</Text>
+                                            </View>
+                                            <Text style={{fontSize:17,fontWeight:"300",color:"lightgreen"}}>正确答案：{v.qs_right}</Text>
+                                            <Text style={{fontSize:17,fontWeight:"300",color:"red"}}>我的答案：{answers[i]}</Text>
+                                            {/* <Text>{setVisible.toString()}</Text> */}
+                                        </View> 
+                            }
+                            return(
+                                <View>
+                                    <TouchableOpacity style={{
+                                        justifyContent:"center",
+                                        alignItems:"center",
+                                        height:40,
+                                        width:40,
+                                        borderRadius:20,
+                                        backgroundColor:wrongAnswer.includes(i+1)?"red":"lightgreen"}}
+                                        onPress={()=>{
+                                            this.setState({ chooseNum:i })
+                                        }}>
+                                        <Text>{i+1}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )
+                        })} 
+                    </View>
                 </View>
-              </TouchableOpacity>
-              <View style={{width:"100%",height:1,backgroundColor:"lightgray"}}></View>
+                {/* 第三层 */}
+                <View>
+                    {result}
+                </View>
             </View>
-            )}
-          </View>
       </View>
     )
   }
 }
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container:{
     flex:1
   },
-  renderAbility:{
-      width: 340,
-      height: 240
-  },
-  playBtn:{
-      width: 50,
-      height: 50,
-      backgroundColor:'rgba(211,211,211,0.6)',
-      borderRadius: 50,
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      marginLeft: -25,
-      marginTop:-25,
-      zIndex:999,
-      justifyContent:"center",
-      alignItems:"center"
-  },
-  sliderBox:{
-      flex:0,
-      flexDirection:'row',
-      alignItems:'center',
-      color:"#eee",
-      opacity:1
-  },
-  backgroundVideo: {
-    // width:screenWidth,
-    position: 'absolute',
-    top: 100,
-    left: 0,
-    bottom: 0,
-    right: 0,
-  },
-  overlayContainer:{
-    alignItems: 'center', 
-    justifyContent: 'center',
-  },
   overlay:{
-    backgroundColor: 'white',
-    padding: 40,
+    backgroundColor: '#E1FFFF',
+    padding: 10,
     borderRadius: 15,
-    alignItems: 'center',
-    width:270,
-    height:450
-  }
+    // alignItems: 'center',
+    // width:270,
+    height:"100%"
+},
+Score:{
+    alignItems:"center",
+    justifyContent:"center",
+    flexDirection:"row",
+    marginBottom:30
+},
 });

@@ -4,6 +4,7 @@ import TopNav from "../../components/TopNav";
 import request from "../../utils/request";
 import { FIND_LIVECOURSE } from "../../utils/pathMap";
 import { TouchableOpacity } from 'react-native';
+import { Image } from 'react-native';
 
 export default class LiveCourse extends Component {
     state={
@@ -18,7 +19,9 @@ export default class LiveCourse extends Component {
     }
 
     getCourse=async()=>{
-        const res = await request.get(FIND_LIVECOURSE);
+        const {title} = this.state
+        const res = await request.get(FIND_LIVECOURSE+title);
+        console.log(res);
         this.setState({ liveCourse: res });
     }
 
@@ -62,11 +65,18 @@ export default class LiveCourse extends Component {
                         {liveCourse.map((v,i)=>
                             <TouchableOpacity style={styles.blocks} 
                                 onPress={()=>this.props.navigation.navigate("LiveInfo",{
-                                    title:v.l_info
+                                    liveCourse:v
                                 })}>
                                 <View>
-                                    <Text>{v.l_info}</Text>
+                                    <Text style={{fontSize:15}}>{v.l_title}</Text>    
+                                </View>    
+                                <View style={styles.smblock}>
+                                    <Text style={{color:"#FF4500",fontSize:10}}>{v.l_subject}</Text>
                                 </View>
+                                <Image
+                                    style={styles.pic}
+                                    source={{uri:v.l_pic}}
+                                    />
                             </TouchableOpacity>
                         )}
                 </View>
@@ -79,11 +89,35 @@ const styles = StyleSheet.create({
         margin:10,
     },
     blocks:{
-        width:"90%",
+        width:"93%",
         height:100,
         borderRadius:6,
         backgroundColor:"#F5F5F5",
         alignSelf:"center",
-        marginBottom:15
+        marginBottom:15,
+        marginTop:15,
+        padding:6,
+        position:"relative"
+    },
+    pic:{
+        width:150,
+        height:100,
+        position:"absolute",
+        right:0,
+        top:0,
+        opacity:0.8,
+        borderTopRightRadius:6,
+        borderBottomRightRadius:6
+    },
+    smblock:{
+        borderWidth:1,
+        width:60,
+        height:20,
+        borderRadius:10,
+        borderColor:"rgb(255,69,0)",
+        justifyContent:"center",
+        alignItems:"center",
+        backgroundColor:'rgba(255,69,0,0.2)',
+        margin:6
     }
 })

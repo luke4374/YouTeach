@@ -18,7 +18,7 @@ import { GirlIcon,BoyIcon} from "../res/fonts/iconSg";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
 import { FIND_BY_CID,VIDEO_VIEWNUM,VIDEO_FINDBYSUB,FIND_COMMENT,UPDATE_COMMENT,
-        FIND_COLLECTION,ADD_COLLECTION,DELE_COLL_BYCUID} from "../utils/pathMap";
+        FIND_COLLECTION,ADD_COLLECTION, DELE_Video_COLL_BYCUID} from "../utils/pathMap";
 //视频播放组件
 import Slider from 'react-native-slider';
 import Video from 'react-native-video';
@@ -175,8 +175,8 @@ export default class ClassPage extends Component {
 
       }
         // 渲染播放按钮组件：是否显示
-       playButtonComponent=()=>{
-           return(
+        playButtonComponent=()=>{
+            return(
             <TouchableWithoutFeedback
                 onPress={this.changePausedState}
             >
@@ -184,8 +184,8 @@ export default class ClassPage extends Component {
                     <Text>▶</Text>                      
                 </View> 
             </TouchableWithoutFeedback>
-           )
-       }
+            )
+        }
 
         pausedSliderFullComponent=()=>{
             let Btn = this.state.isPaused?<Entypo name="controller-play" size={25} color="#FFFFFF"/> :<Entypo name="controller-paus" size={25} color="#FFFFFF"/>  ;
@@ -253,11 +253,11 @@ export default class ClassPage extends Component {
         }
         this.setState({ isCollect:!isCollect });
         if(!isCollect){
-            const res = await request.get(ADD_COLLECTION+this.props.UserStore.user.u_id+"/"+courseId);
+            const res = await request.get(ADD_COLLECTION+this.props.UserStore.user.u_id+"/"+courseId+"/"+'1');
             console.log(res);
             Toast.message("已收藏",1000,"bottom")
         }else{
-            const res = await request.delete(DELE_COLL_BYCUID+courseId+"/"+this.props.UserStore.user.u_id);
+            const res = await request.delete(DELE_Video_COLL_BYCUID+courseId+"/"+this.props.UserStore.user.u_id);
             console.log(res);
             Toast.message("取消收藏",1000,"bottom")
         }
@@ -430,7 +430,8 @@ export default class ClassPage extends Component {
 }
 const styles = StyleSheet.create({
     container:{
-        flex:1
+        flex:1,
+        position:"relative"
     },
     myVideo:{
         width: 340,
@@ -465,8 +466,9 @@ const styles = StyleSheet.create({
         alignItems:"center"
     },
     gobackBtn:{
+        position:"absolute",
         width: 50,
-        height: 180,
+        top:-180,
     },
     sliderBox:{
         flex:0,
@@ -504,13 +506,13 @@ const styles = StyleSheet.create({
     comment:{
         flexDirection:"row",
         justifyContent:"space-between",
-        width:266,
+        width:"85%",
         height:80
     },
     submitButton:{
         marginTop:45,
         backgroundColor:"#00FA9A",
-        width:50,
+        width:"15%",
         height:30,
         borderRadius:15,
         justifyContent:"center",

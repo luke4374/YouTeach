@@ -20,7 +20,7 @@ import {
     TEST_NUM
 } from "../utils/pathMap";
 import SvgUri from 'react-native-svg-uri';
-import { Plane,AnswerSheet } from "../res/fonts/iconSg";
+import { Collect,AnswerSheet } from "../res/fonts/iconSg";
 import { NavigationContext } from "@react-navigation/native";
  
 let screenWidth  = Dimensions.get('window').width;
@@ -34,6 +34,7 @@ export default class TalentPage extends Component {
         testInfo:[],    
         refreshing:false,
         page:1,
+        isCollect:false
     }
 
     componentDidMount() {
@@ -97,7 +98,6 @@ export default class TalentPage extends Component {
         )
     }
 
-
     render() {
         const {abilityInfo,testInfo,refreshing,testTitle} = this.state
         return (
@@ -133,6 +133,9 @@ export default class TalentPage extends Component {
                                         <Text style={{fontSize:10,color:"#444",marginTop:5}}>判断题5道</Text>
                                         
                                     </View>
+                                    {/* <TouchableOpacity style={styles.collect} onPress={this.collect}>
+                                        <SvgUri svgXmlData={Collect} width="30" height="30" />
+                                    </TouchableOpacity> */}
                                 </View>
                             </TouchableOpacity>
                             </View>)}
@@ -179,7 +182,7 @@ const styles = StyleSheet.create({
         borderRadius:20,
         backgroundColor:"rgba(255,100,10,0.5)",
         alignItems:"center",
-        
+        position:"relative",
     },
     renderAbility:{
         padding:13,
@@ -188,5 +191,10 @@ const styles = StyleSheet.create({
         borderBottomWidth:10,
         borderBottomColor:"lightgray",
         borderColor:"#666"
+    },
+    collect:{
+        position:"absolute",
+        right:10,
+        top:6
     }
 })

@@ -35,7 +35,7 @@ import RootStore from "../mobx";
 import { inject,observer } from "mobx-react";
 
 @inject("RootStore","UserStore")
-// @observer
+@observer
 export default class Main extends Component {
   static contextType = NavigationContext;
     state={
@@ -53,7 +53,6 @@ export default class Main extends Component {
 
       componentDidMount(){
         this.getTotalPage();
-        // console.log("++++++++++++++++++");
         // console.log(this.props);
         this.getCourses();
       }
@@ -189,7 +188,7 @@ export default class Main extends Component {
                </View>
               {/* 搜索框 结束 */}
 
-          <View style={{height:472}}>
+          <View style={{height:"92%"}}>
             {/* <Text>在线视频</Text> */}
             {/* FlatList 开始 */}
             <FlatList

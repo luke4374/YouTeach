@@ -123,6 +123,13 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+
+        }
+
+    }
     // compileSdkVersion rootProject.ext.compileSdkVersion
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
@@ -215,6 +222,7 @@ dependencies {
     compile project(':jmessage-react-plugin')
     compile project(':jcore-react-native')
     compile project(':aurora-imui-react-native')
+    // compile project(':react-native-splash-screen')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

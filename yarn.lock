@@ -3191,6 +3191,11 @@ fancy-log@^1.3.2:
     parse-node-version "^1.0.0"
     time-stamp "^1.0.0"
 
+fast-base64-decode@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/fast-base64-decode/download/fast-base64-decode-1.0.0.tgz#b434a0dd7d92b12b43f26819300d2dafb83ee418"
+  integrity sha1-tDSg3X2SsStD8mgZMA0tr7g+5Bg=
+
 fast-deep-equal@^3.1.1:
   version "3.1.3"
   resolved "https://registry.npm.taobao.org/fast-deep-equal/download/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
@@ -6077,6 +6082,11 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.13.1.tgz?cache=0&sync_timestamp=1608327624270&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-is%2Fdownload%2Freact-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ=
 
+react-native-agora@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.npm.taobao.org/react-native-agora/download/react-native-agora-3.3.2.tgz#aaf9288c3c697a9d2ce99875524d29df9f6fef4d"
+  integrity sha1-qvkojDxpep0s6Zh1Uk0p359v700=
+
 react-native-confirmation-code-field@^6.5.1:
   version "6.5.1"
   resolved "https://registry.npm.taobao.org/react-native-confirmation-code-field/download/react-native-confirmation-code-field-6.5.1.tgz?cache=0&sync_timestamp=1609098349296&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-confirmation-code-field%2Fdownload%2Freact-native-confirmation-code-field-6.5.1.tgz#0097c9748c2abbe28d8b34ee343ef60cf93434c2"
@@ -6130,6 +6140,13 @@ react-native-gesture-handler@^1.9.0:
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
     prop-types "^15.7.2"
+
+react-native-get-random-values@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npm.taobao.org/react-native-get-random-values/download/react-native-get-random-values-1.6.0.tgz#9035636b2dc2a6d574f2803205381fe1a7b5c864"
+  integrity sha1-kDVjay3CptV08oAyBTgf4ae1yGQ=
+  dependencies:
+    fast-base64-decode "^1.0.0"
 
 react-native-image-crop-picker@^0.33.2:
   version "0.33.4"
@@ -6229,6 +6246,11 @@ react-native-slider@^0.11.0:
   integrity sha1-tooLxDyEIrJM1XlHzFrCvNtY+tw=
   dependencies:
     prop-types "^15.5.6"
+
+react-native-splash-screen@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.npm.taobao.org/react-native-splash-screen/download/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
+  integrity sha1-1H7IVXsbqYjuPqmNAUYwgbYP/0U=
 
 react-native-svg-uri@^1.2.3:
   version "1.2.3"
@@ -7549,6 +7571,11 @@ uuid@^3.3.2:
   version "3.4.0"
   resolved "https://registry.npm.taobao.org/uuid/download/uuid-3.4.0.tgz?cache=0&sync_timestamp=1607460209394&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fuuid%2Fdownload%2Fuuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4=
+
+uuid@^8.3.2:
+  version "8.3.2"
+  resolved "https://registry.npm.taobao.org/uuid/download/uuid-8.3.2.tgz?cache=0&sync_timestamp=1607460209394&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fuuid%2Fdownload%2Fuuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
+  integrity sha1-gNW1ztJxu5r2xEXyGhoExgbO++I=
 
 v8-compile-cache@^2.0.3:
   version "2.2.0"
