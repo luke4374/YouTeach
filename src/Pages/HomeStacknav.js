@@ -22,6 +22,7 @@ import MyLiveCourse from "./LiveCourse/MyLiveCourse";
 import AgoraLive from "./LiveCourse/AgoraLive";
 import LiveClass from "./LiveCourse/LiveClass";
 import LiveVideo from "./LiveCourse/Video";
+import Bind from "./account/bind/index";
 
 const HomeStack = createStackNavigator();
 export default class HomeScreen extends Component {
@@ -51,6 +52,7 @@ export default class HomeScreen extends Component {
                 <HomeStack.Screen  name="AgoraLive" component={AgoraLive} />
                 <HomeStack.Screen  name="LiveClass" component={LiveClass} />
                 <HomeStack.Screen  name="LiveVideo" component={LiveVideo} />
+                <HomeStack.Screen  name="Bind" component={Bind} />
             </HomeStack.Navigator>
             </NavigationContainer>
         )

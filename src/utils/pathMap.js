@@ -2,7 +2,7 @@
 /**
  * 接口基地址
  */
-export const BASE_URI = "http://192.168.3.5:8080";
+export const BASE_URI = "http://192.168.99.109:8080";
 
 /**
  * 登陆POST
@@ -182,3 +182,23 @@ export const Find_SignByid = '/findSignByids/';
  * 添加直播房间号 GET
  */
 export const Add_Channel = '/addChannel/';
+/**
+ * 通过手机号查找用户
+ */
+export const Find_userByPhone = '/findBindByphone/';
+/**
+ * 发送绑定信息 POST
+ */
+export const Send_Bind = '/sendRequest';
+/**
+ * 通过用户id查找绑定信息
+ */
+ export const Find_BindByUId = '/findRequestByUId/';
+ /**
+ * 家长用户通过rid查找绑定信息
+ */
+export const Find_BindByRId = '/findRequestByRId/';
+/**
+ * 同意添加绑定  /{u_id}/{r_id}
+ */
+export const Answer_Bind = '/answerRequest/'

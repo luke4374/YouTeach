@@ -84,7 +84,7 @@ export default class MinePage extends Component {
                     //学生和家长用户绑定按键
             return(
                 <View style={styles.bottomBlock}>
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate("Bind")}>
                         <View style={{flexDirection:"row"}}>
                             <SvgUri svgXmlData={find} width="25" height="25"/>
                             <Text style={{marginTop:2,marginLeft:5,fontSize:14,color:"#555"}}>绑定</Text>
@@ -240,7 +240,7 @@ export default class MinePage extends Component {
                     {/* 选项栏 结束 */}
                     {this.selectUserBar()}
                     {this.props.RootStore.loginstat ? this.renderLogoutBtn():null}
-                        </ScrollView>
+                    </ScrollView>
                 {/* </ImageHeaderScrollView> */}
 
             </View>
