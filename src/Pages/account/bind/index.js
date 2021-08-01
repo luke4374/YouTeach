@@ -85,7 +85,7 @@ export default class index extends Component {
         console.log(phoneNum);
     }
     onPhoneSubmit=async()=>{
-        const {uid} = this.state
+        const {uid,phoneNum} = this.state
         const res = await request.get(Find_userByPhone+phoneNum)
         const req = await request.post(Send_Bind,{
             u_id:res[0].u_id,
@@ -93,6 +93,7 @@ export default class index extends Component {
             r_test:"请求绑定",
         }) 
         this.setState({ showAdd: false });
+        Toast.message("已发送请求",1000,"center")
     }
     getBindInfo=async()=>{
         const {bindReq,userInfo,collection} = this.state
@@ -117,9 +118,9 @@ export default class index extends Component {
                         style={styles.pic}
                         />
                     <View style={{flex:1,marginLeft:20,marginTop:10}}>
-                        <Text style={{fontSize:16}}>{v.l_title}</Text>
-                        <Text style={{color:"#666"}}>开课时间:</Text>
-                        <Text style={{fontSize:14,color:"#666"}}>{date(v.l_time).format("yyyy-MM-DD HH:mm")}</Text>
+                        <Text style={{fontSize:13}}>{v.l_title}</Text>
+                        <Text style={{color:"#666",fontSize:12}}>开课时间:</Text>
+                        <Text style={{fontSize:10,color:"#666"}}>{date(v.l_time).format("yyyy-MM-DD HH:mm")}</Text>
                     </View>
                 </View>
                 <View style={{borderBottomWidth:1,borderColor:"#888",marginBottom:6,marginTop:6}}/>
@@ -210,8 +211,8 @@ export default class index extends Component {
                                         style={{width:100,height:70,borderRadius:15}}
                                     />
                                 </View>
-                                <View style={{width:"63%",position:"relative",margin:6}}>
-                                    <Text style={{marginBottom:10}}>{v.c_name}</Text>
+                                <View style={{width:"63%",position:"relative",margin:10}}>
+                                    <Text style={{marginBottom:10,fontSize:12}}>{v.c_name}</Text>
                                 </View>
                             </TouchableOpacity>
                             <View style={{width:"100%",height:1,backgroundColor:"lightgray"}}></View>

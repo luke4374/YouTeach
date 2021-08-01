@@ -52,14 +52,13 @@ export default class MyCourse extends Component {
             // console.log(idArr);
             const users = await request.post(FIND_CHAT_USERS,idArr);
             // console.log(users);
-
             this.setState({ userlist: res.map((v,i)=>({...v,user:users.data[i]})) });
         }
         this.setState({ refreshing:false  });
     }
 
     //请求所有老师数据
-    getAllTeacher=async()=>{
+    getAllTeacher=async()=>{    
         const T_Info = await request.get(CHAT_GETTEACHERS);
         // console.log(T_Info);
         this.setState({ teacher:T_Info });
@@ -209,7 +208,7 @@ const styles = StyleSheet.create({
     },
     content:{
         backgroundColor:"#FFF",
-        height:400,
+        height:500,
         borderTopLeftRadius:15,
         borderTopRightRadius:15,
         marginTop:-10,

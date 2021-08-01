@@ -78,9 +78,13 @@ export default class index extends Component {
             u_username:this.state.username,
             u_password:password
         })
-        console.log(res)
+        console.log("登录请求信息：",res)
         var userid = res.data.u_id.toString()
-        console.log(userid);
+        console.log("用户id:",userid);
+        if(res.data.u_status == "1"){
+            Toast.sad("账号异常！",1000,"center")
+            return;
+        }
         if(res.data!=null){
             //请求成功
             this.props.UserStore.setUser(res.data);

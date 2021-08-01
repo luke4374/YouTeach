@@ -28,6 +28,7 @@ export default class LiveInfo extends Component {
     componentDidMount() {
         this.getInfo();
         this.signStat();
+        this.classStat();
         // console.log(this.state.Course);
     }
 
@@ -63,8 +64,21 @@ export default class LiveInfo extends Component {
             Toast.sad("未登录")
         }
     }
-    classStat =async()=>{
-        const res = await request.get(Check_LiveStat);
+    classStat=async()=>{
+        const {Course} = this.state
+        const res = await request.get(Check_LiveStat+Course.l_id);
+        this.setState({ classStat: res });
+        console.log("STATUS:",res);
+    }
+    renderStatus=()=>{
+        const {classStat} = this.state;
+        if(classStat == "0"){
+            return <Text style={{color:"lightgreen"}}>报名中</Text>
+        }else if(classStat == "1"){
+            return <Text style={{color:"orange"}}>已开课</Text>
+        }else{
+            return <Text style={{color:"red"}}>已结课</Text>
+        }
     }
 
     render() {
@@ -80,6 +94,7 @@ export default class LiveInfo extends Component {
                     {/* 第一栏 */}
                     <View style={{padding:10}}>
                         <Text style={{fontSize:20}}>{Course.l_title}</Text>
+                        {this.renderStatus()}
                         <Text style={{color:"#C0C0C0"}}>开课时间：{date(Course.l_time).format("YYYY-MM-DD HH:mm")} | 1小时</Text>
                     </View>
                     {/* 空行 */}

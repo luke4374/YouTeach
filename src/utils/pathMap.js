@@ -2,7 +2,7 @@
 /**
  * 接口基地址
  */
-export const BASE_URI = "http://192.168.99.109:8080";
+export const BASE_URI = 'http://192.168.3.33:8080';
 
 /**
  * 登陆POST
